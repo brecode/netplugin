@@ -504,12 +504,11 @@ func processSvcProviderUpdEvent(netPlugin *plugin.NetPlugin, svcProvider *master
 // processPolicyRuleState updates policy rule state
 func processPolicyRuleState(netPlugin *plugin.NetPlugin, opts core.InstanceInfo, ruleID string, isDelete bool) error {
 	netPlugin.Lock()
-	defer netPlugin.Unlock()
 
 	// read policy config
 	ruleCfg := &mastercfg.CfgPolicyRule{}
 	ruleCfg.StateDriver = netPlugin.StateDriver
-
+	log.Debug("rulecfg is: %+v and ruleID= %s:", rulecfg, ruleID)
 	err := ruleCfg.Read(ruleID)
 	if err != nil {
 		log.Errorf("Failed to read config for policy rule '%s' \n", ruleID)
@@ -532,7 +531,7 @@ func processPolicyRuleState(netPlugin *plugin.NetPlugin, opts core.InstanceInfo,
 		}
 		log.Infof("PolicyRule %s create operation succeeded", ruleID)
 	}
-
+	netPlugin.Unlock()
 	return err
 }
 

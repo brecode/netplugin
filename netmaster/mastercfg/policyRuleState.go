@@ -76,12 +76,12 @@ func addPolicyRuleState(ofnetRule *ofnet.OfnetPolicyRule, epgID int) error {
 }
 
 // delPolicyRuleState deletes policy rule from state store
-func delPolicyRuleState(ofnetRule *ofnet.OfnetPolicyRule) error {
+func delPolicyRuleState(ofnetRule *ofnet.OfnetPolicyRule, epgID int) error {
 	ruleCfg := &CfgPolicyRule{}
 	ruleCfg.StateDriver = stateStore
 	ruleCfg.OfnetPolicyRule = (*ofnetRule)
+	ruleCfg.EndpointGroupID = epgID
 
 	// Delete the rule
 	return ruleCfg.Clear()
 }
-

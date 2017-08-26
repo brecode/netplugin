@@ -380,7 +380,7 @@ func (gp *EpgPolicy) DelRule(rule *contivModel.Rule) error {
 		// }
 
 		// Send DelRule to netplugin agents
-		err := delPolicyRuleState(ofnetRule)
+		err := delPolicyRuleState(ofnetRule, gp.EndpointGroupID)
 		if err != nil {
 			log.Errorf("Error deleting the ofnet rule {%+v}. Err: %v", ofnetRule, err)
 		}
@@ -425,4 +425,3 @@ func (gp *EpgPolicy) Clear() error {
 func NotifyEpgChanged(epgID int) {
 	ofnetMaster.InjectGARPs(epgID)
 }
-
